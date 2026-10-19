@@ -1,0 +1,316 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Digital Sustainability Benchmark Journey</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a wide service-blueprint grid (row labels + 5 phases) that scrolls sideways inside its own frame; journey map rows on top, blueprint lanes below separated by named lines. */
+:root{
+  --bg:#f3f4ef; --surface:#e3e4df; --cell:#ecede8; --line:#c9cbc2;
+  --fg:#1d1f1a; --muted:#5d6158;
+  --lime:#e6f39a; --lime-strong:#c9df4f; --lime-ink:#3e4a05;
+  --pos:#2f7a3d; --neg:#b0452c; --opp:#3b5bb5;
+  --f-display:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#161814; --surface:#22251f; --cell:#1c1f19; --line:#353a2f;
+  --fg:#e9ebe3; --muted:#9ca196;
+  --lime:#3a4410; --lime-strong:#a9c234; --lime-ink:#e3f19a;
+  --pos:#7cc98a; --neg:#ec8f78; --opp:#93abf0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#161814; --surface:#22251f; --cell:#1c1f19; --line:#353a2f;
+  --fg:#e9ebe3; --muted:#9ca196;
+  --lime:#3a4410; --lime-strong:#a9c234; --lime-ink:#e3f19a;
+  --pos:#7cc98a; --neg:#ec8f78; --opp:#93abf0; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.5}
+.wrap{max-width:1480px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
+.eyebrow,.lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:end}
+.intro p{margin:10px 0 0;max-width:62ch;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.facts div{background:var(--cell);padding:12px 14px;min-width:0}
+.facts b{display:block;font-weight:500;margin-top:2px}
+@media (max-width:760px){.intro{grid-template-columns:1fr}}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%}
+
+.frame{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+.bp{display:grid;grid-template-columns:170px repeat(5,minmax(230px,1fr));min-width:1320px}
+.bp > div{padding:12px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+.bp > div:nth-child(6n){border-right:0}
+
+.stage{grid-column:span 1;background:var(--bg);font-family:var(--f-display);font-style:italic;font-size:15px;color:var(--muted);text-align:center;position:relative;border-bottom:0!important}
+.stage::after{content:"";position:absolute;left:14px;right:14px;bottom:6px;border-bottom:1px solid var(--muted)}
+.stage.s2{grid-column:span 2}
+.phase{background:var(--lime);color:var(--lime-ink);text-align:center}
+.phase .lbl{color:var(--lime-ink);opacity:.75}
+.phase h3{font-size:16px;font-weight:700;margin-top:2px}
+.rowh{background:var(--lime);color:var(--lime-ink);position:sticky;left:0;z-index:2}
+.rowh h3{font-size:14px;font-weight:700}
+.rowh p{margin:4px 0 0;font-size:12px;opacity:.8;line-height:1.35}
+.c{background:var(--cell)}
+.c p{margin:0 0 8px}.c p:last-child{margin-bottom:0}
+.c ul{margin:0;padding-left:16px;display:grid;gap:5px}
+
+q{display:block;font-style:italic;quotes:"\201C" "\201D";margin-bottom:8px}
+q:last-child{margin-bottom:0}
+.src{display:block;font-style:normal;font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;color:var(--muted);margin-top:2px}
+.pos q{border-left:2px solid var(--pos);padding-left:8px}
+.neg q{border-left:2px solid var(--neg);padding-left:8px}
+.opp li::marker{color:var(--opp)}
+.chip{display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;padding:2px 6px;border:1px solid var(--line);border-radius:3px;margin:0 4px 4px 0;background:var(--bg)}
+
+.emo{grid-column:2 / span 5;background:var(--cell);padding:0!important}
+.curve{position:relative;height:96px;border-bottom:1px dashed var(--line)}
+.curve svg{position:absolute;inset:0;width:100%;height:100%}
+.curve path{fill:none;stroke:var(--lime-strong);stroke-width:3;vector-effect:non-scaling-stroke}
+.curve .base{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.pt{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--bg);border:3px solid var(--lime-strong)}
+.emo-text{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.emo-text div{padding:10px 14px;border-right:1px solid var(--line)}
+.emo-text div:last-child{border-right:0}
+.emo-text b{display:block;font-weight:600}
+
+.divider{grid-column:1 / -1;padding:10px 14px!important;background:var(--bg);display:flex;align-items:center;gap:14px;border-right:0!important}
+.divider h2{font-size:18px;font-weight:700}
+.divider p{margin:0;color:var(--muted);font-size:12px}
+.lineof{grid-column:1 / -1;padding:3px 14px!important;background:var(--surface);border-right:0!important;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
+.lineof::after{content:"";flex:1;border-top:2px dashed var(--muted);opacity:.6}
+.lane{background:var(--surface)!important}
+.lane h3{font-size:13px}
+
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.notes h2{font-size:18px;margin-bottom:6px}
+.notes p,.notes li{color:var(--muted);margin:0}
+.notes ul{margin:0;padding-left:16px;display:grid;gap:4px}
+@media (max-width:860px){.notes{grid-template-columns:1fr}}
+footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer a{color:inherit}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div>
+      <div class="eyebrow">Customer journey map + service blueprint</div>
+      <h1>Digital Sustainability Benchmark</h1>
+      <p>End-to-end journey of a design agency team benchmarking a new project at kick-off, from first landing on the tool to taking a report into the client meeting. Quotes come from four rounds of testing; the blueprint lanes show what the tool and team do behind each step.</p>
+    </div>
+    <div class="facts">
+      <div><span class="lbl">Primary user</span><b>Digital design agency team, 10+ people</b></div>
+      <div><span class="lbl">Validated with</span><b>Faraday Digital</b></div>
+      <div style="grid-column:1/-1"><span class="lbl">Scenario</span><b>Monday morning. Kick-off with a new e-commerce client on Friday. The team wants to benchmark the project and bring concrete recommendations to the meeting.</b></div>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--pos)"></i>Positive quote</span>
+    <span><i class="dot" style="background:var(--neg)"></i>Pain point quote</span>
+    <span><i class="dot" style="background:var(--opp)"></i>Opportunity</span>
+    <span><i class="dot" style="background:var(--lime-strong)"></i>Emotion curve</span>
+    <span>Scroll sideways to see all five phases →</span>
+  </div>
+
+  <div class="frame">
+    <div class="bp">
+      <!-- stages -->
+      <div class="stage" style="background:var(--bg)"></div>
+      <div class="stage s2">Discovery</div>
+      <div class="stage">Assessment &amp; Reflection</div>
+      <div class="stage s2">Insights &amp; Planning</div>
+
+      <!-- phases -->
+      <div class="rowh"><h3>Journey step</h3></div>
+      <div class="phase"><span class="lbl">Phase 1</span><h3>Awareness</h3></div>
+      <div class="phase"><span class="lbl">Phase 2</span><h3>Onboarding</h3></div>
+      <div class="phase"><span class="lbl">Phase 3</span><h3>Assessment</h3></div>
+      <div class="phase"><span class="lbl">Phase 4</span><h3>Results</h3></div>
+      <div class="phase"><span class="lbl">Phase 5</span><h3>Actions</h3></div>
+
+      <!-- user actions -->
+      <div class="rowh"><h3>User actions</h3><p>What is the user trying to do?</p></div>
+      <div class="c"><p>The agency wants to reduce the environmental impact of its digital work and visits the landing page of the Digital Sustainability Benchmark Tool.</p></div>
+      <div class="c"><p>Selects <b>Start benchmark</b>, reads how the process works, picks a compliance framework if relevant, and chooses a path: go straight to the tool or learn more first.</p></div>
+      <div class="c"><p>Finance, operations, design and development complete the questionnaire together, scoring the project across five values: Clean, Efficiency, Stewardship, Non-manipulative design, Lifecycle.</p></div>
+      <div class="c"><p>Reviews the sustainability score as a spider chart, reads what each score means and compares it to the benchmark.</p></div>
+      <div class="c"><p>Reads role-based recommendations, picks what to apply, downloads the benchmark report and brings it to Friday's client kick-off.</p></div>
+
+      <!-- positives -->
+      <div class="rowh"><h3>Positive feedback</h3><p>What is working? What makes the user happy?</p></div>
+      <div class="c pos">
+        <q>The landing page is visually strong and immediately catches attention.</q>
+        <q>The explanation of digital sustainability looks clear and approachable.</q>
+      </div>
+      <div class="c pos">
+        <p>Testers valued choosing their own depth: one wanted a deep dive, another a quick checklist.</p>
+        <span class="src">Faraday user test · 15 Apr</span>
+      </div>
+      <div class="c pos">
+        <p>Answering as a group surfaced knowledge gaps between roles and started real discussion, which Faraday asked for: something that</p>
+        <q>gets the conversation going.<span class="src">Faraday</span></q>
+      </div>
+      <div class="c pos">
+        <p>The spider chart is a format Faraday already uses to evaluate projects, so results felt familiar.</p>
+      </div>
+      <div class="c pos">
+        <q>You're aligned with X certification, here's what to change. That would be awesome. Saves you a lot of reading.<span class="src">Final usability test</span></q>
+      </div>
+
+      <!-- negatives -->
+      <div class="rowh"><h3>Pain points</h3><p>What gets in the way of the user's goal?</p></div>
+      <div class="c neg">
+        <q>Why is this valuable for us as an agency?</q>
+        <q>What exactly is digital sustainability?</q>
+        <q>How does it help our business, our people and our projects?</q>
+      </div>
+      <div class="c neg">
+        <q>We don't know which project we are assessing.<span class="src">MDD student usability test</span></q>
+      </div>
+      <div class="c neg">
+        <p>People reread questions and skipped some. "Clean" and "Efficient" overlapped. Low / medium / high was not enough:</p>
+        <q>like ‘I haven't thought of it.’<span class="src">MDD student usability test</span></q>
+        <p>Leading questions reduced trust in the result.</p>
+        <span class="src">Faraday user test</span>
+      </div>
+      <div class="c neg">
+        <q>Our chart looks like this, but is this good?<span class="src">MDD student usability test</span></q>
+      </div>
+      <div class="c neg">
+        <q>Why would I use this more than once?</q>
+        <q>Will this activity be forgotten?<span class="src">MDD crit session</span></q>
+      </div>
+
+      <!-- emotions -->
+      <div class="rowh"><h3>Emotions</h3><p>How does the user feel at this phase?</p></div>
+      <div class="emo">
+        <div class="curve" aria-label="Emotion curve: medium at awareness, rising at onboarding, dipping at assessment, recovering at results, highest at actions">
+          <svg viewBox="0 0 1000 96" preserveAspectRatio="none" aria-hidden="true">
+            <line class="base" x1="0" y1="48" x2="1000" y2="48"/>
+            <path d="M100 52 C200 52 220 38 300 38 C380 38 420 74 500 74 C580 74 620 46 700 46 C780 46 820 20 900 20"/>
+          </svg>
+          <i class="pt" style="left:10%;top:52px"></i>
+          <i class="pt" style="left:30%;top:38px"></i>
+          <i class="pt" style="left:50%;top:74px"></i>
+          <i class="pt" style="left:70%;top:46px"></i>
+          <i class="pt" style="left:90%;top:20px"></i>
+        </div>
+        <div class="emo-text">
+          <div><b>Curious, hopeful</b>but slightly sceptical of greenwashing.</div>
+          <div><b>Interested</b>but unsure what “project-level” means for them.</div>
+          <div><b>Engaged, then unsure</b>when no one in the room knows an answer.</div>
+          <div><b>Validated</b>by a familiar chart, yet unsure how to read the score.</div>
+          <div><b>Motivated</b>with something concrete to show the client.</div>
+        </div>
+      </div>
+
+      <!-- insights -->
+      <div class="rowh"><h3>Insights</h3><p>What does the data tell us?</p></div>
+      <div class="c"><p>The first screen does not make the purpose, business value and outcome explicit enough. Users need digital sustainability explained in practical agency terms before they commit time.</p></div>
+      <div class="c"><p>The tool works at project level and at kick-off, when decisions are cheapest to change. This has to be said upfront, or users assess the wrong thing.</p></div>
+      <div class="c"><p>Knowledge is spread across roles. What one person knows is not what the team knows. Most usability problems were in the copy, not the layout.</p></div>
+      <div class="c"><p>A score without context is meaningless. Users need explanations and a benchmark to know what “good” looks like.</p></div>
+      <div class="c"><p>The score is a starting point. Real value is in the conversation it starts, and in giving teams a reason to come back.</p></div>
+
+      <!-- touchpoints -->
+      <div class="rowh"><h3>Touchpoints</h3></div>
+      <div class="c"><span class="chip">Desktop landing page</span><span class="chip">Mobile landing page</span><span class="chip">Shared link</span><span class="chip">Social post</span><span class="chip">Email</span><span class="chip">Workshop invitation</span></div>
+      <div class="c"><span class="chip">Start benchmark CTA</span><span class="chip">Process explainer</span><span class="chip">Framework picker</span><span class="chip">Go to tool / Learn more</span></div>
+      <div class="c"><span class="chip">Questionnaire (5 values)</span><span class="chip">“I don't know” option</span><span class="chip">Examples per value</span><span class="chip">Team meeting</span></div>
+      <div class="c"><span class="chip">Spider chart</span><span class="chip">Score explanations</span><span class="chip">Benchmark comparison</span></div>
+      <div class="c"><span class="chip">Role-based recommendations</span><span class="chip">Benchmark report (download)</span><span class="chip">Client kick-off meeting</span></div>
+
+      <!-- opportunities -->
+      <div class="rowh"><h3>Opportunities</h3></div>
+      <div class="c opp"><ul>
+        <li>Lead with a value proposition: “Measure where your agency stands today and get practical actions to make your digital work more sustainable.”</li>
+        <li>A short, concrete definition: energy use, efficient design and development, digital waste, responsible tech choices.</li>
+        <li>Show the outcome upfront: score, visual report, tailored actions, progress tracking.</li>
+      </ul></div>
+      <div class="c opp"><ul>
+        <li>State clearly: one project, assessed at kick-off.</li>
+        <li>Ask the team to name the project before starting.</li>
+        <li>Show the steps: Define → Score → Act → Certify.</li>
+      </ul></div>
+      <div class="c opp"><ul>
+        <li>Show “X minutes to discuss with your team” per section.</li>
+        <li>Prompt users to check uncertain answers with the relevant role.</li>
+        <li>Keep reviewing questions for neutrality.</li>
+      </ul></div>
+      <div class="c opp"><ul>
+        <li>Pair every score with a plain-language explanation and an industry benchmark.</li>
+        <li>Highlight the one or two values to discuss first.</li>
+      </ul></div>
+      <div class="c opp"><ul>
+        <li>Map results to certifications: “You're aligned with X, here's what to change.”</li>
+        <li>Re-benchmark at project milestones to track progress over time.</li>
+      </ul></div>
+
+      <!-- blueprint -->
+      <div class="divider"><h2>Service blueprint</h2><p>What happens in front of and behind the user at each phase</p></div>
+
+      <div class="lineof">Line of interaction</div>
+
+      <div class="rowh"><h3>Frontstage</h3><p>What the user sees and interacts with</p></div>
+      <div class="c"><p>Framer landing page “Digital doesn't mean invisible”: hero, definition, five core values, primary CTA.</p></div>
+      <div class="c"><p>Onboarding screens explaining the evaluate → reflect flow, framework selection and the choice of depth.</p></div>
+      <div class="c"><p>Question screens grouped by value, with examples, an “I don't know” option and progress indicator.</p></div>
+      <div class="c"><p>Results screen: spider chart across five values, with score explanations and benchmark.</p></div>
+      <div class="c"><p>Recommendations filtered by role (designer, developer, finance, sales…) and a downloadable benchmark report.</p></div>
+
+      <div class="lineof">Line of visibility</div>
+
+      <div class="rowh lane"><h3>Backstage</h3><p>What the system and team do out of sight</p></div>
+      <div class="c lane"><p>Content strategy translates sustainability principles into agency language and business benefits: cost savings, efficiency, profit.</p></div>
+      <div class="c lane"><p>Selected framework and chosen depth configure which questions and how much guidance appear.</p></div>
+      <div class="c lane"><p>Answers are saved per value; “I don't know” answers are flagged instead of scored as low.</p></div>
+      <div class="c lane"><p>Scoring logic aggregates answers into five value scores and plots them against the benchmark.</p></div>
+      <div class="c lane"><p>Low-scoring values are mapped to role-specific actions; the report is generated from scores and chosen actions.</p></div>
+
+      <div class="lineof">Line of internal interaction</div>
+
+      <div class="rowh lane"><h3>Support processes</h3><p>Knowledge, partners and research behind the service</p></div>
+      <div class="c lane"><p>Positioning tested with MDD students, educators and Faraday. Landing page built in Framer.</p></div>
+      <div class="c lane"><p>Compliance frameworks and certification criteria referenced for framework selection.</p></div>
+      <div class="c lane"><p>Question bank built on W3C Web Sustainability Guidelines, Sustainable Web Manifesto, Wholegrain Digital methods and UN SDGs; reviewed for neutrality.</p></div>
+      <div class="c lane"><p>Faraday's existing spider-chart project evaluation used as the result format. Benchmark data from assessed projects.</p></div>
+      <div class="c lane"><p>Recommendation library per role, based on Faraday's 9 roles and responsibilities.</p></div>
+    </div>
+  </div>
+
+  <section class="notes">
+    <div>
+      <h2>How we got here</h2>
+      <ul>
+        <li><b>Pivot 1.</b> A values workshop: a blank page was too open.</li>
+        <li><b>Pivot 2.</b> Workshop 2.0, then a digital tool, after Faraday asked “Who is going to use it?”</li>
+        <li><b>Pivot 3.</b> Benchmark projects, not company values.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Research inputs</h2>
+      <ul>
+        <li>Design Agency Simulation Workshop, MDD studios</li>
+        <li>Workshop and user test with Faraday, 15 April 2025</li>
+        <li>MDD crit session and student usability tests</li>
+        <li>Final usability test</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Biggest lesson</h2>
+      <p>Ask “who uses it, and how often?” in week one. Two of three pivots came from that question, and the score only matters for the conversation it starts.</p>
+    </div>
+  </section>
+
+  <footer>
+    Muskan Jain · Built with Julie Reyes Villalta, Sebastian Jaime Moncada and Stefan van Brummelen, mentored by Niels de Keizer at Faraday Digital · MDD Beyond Human Design Playgrounds (AUAS) ·
+    <a href="https://medium.com/@muskanjain.nid/digital-doesnt-mean-invisible-12df72d55794">Read Part 1 on Medium</a>
+  </footer>
+</div>
+
+</body></html>
